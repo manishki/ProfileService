@@ -1,4 +1,5 @@
-﻿using ProfileService.DataBase;
+﻿using log4net;
+using ProfileService.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,15 @@ namespace ProfileService.Controllers
 {
     public class UsersController : ApiController
     {
+        ILog log = log4net.LogManager.GetLogger(typeof(UsersController));
         // GET api/users
         public IHttpActionResult Get()
         {
             using (var context = new ProfileContext())
             {
+                log.Debug("Fetching all the record from the database.");
                 var profiles = context.Users.ToArray();
+                log.Debug($"Successfully got {profiles.Length} records");
                 return Ok(profiles);
             }
         }
@@ -22,7 +26,9 @@ namespace ProfileService.Controllers
         {
             using (var context = new ProfileContext())
             {
+                log.Debug($"Fetching the record from the database with {id}");
                 var profile = context.Users.Find(id);
+                log.Debug($"Fetched the record from the database with {id}");
                 return Ok(profile);
             }
         }
@@ -33,6 +39,7 @@ namespace ProfileService.Controllers
             {
                 var newUser = profile.Users.Add(user);
                 profile.SaveChanges();
+                log.Debug($"Record added to the database with id {user.Id}");
                 return Ok(newUser);
             }
 
@@ -44,6 +51,7 @@ namespace ProfileService.Controllers
                 var userTobeUpdated = profile.Users.Find(user.Id);
                 if (user == null)
                 {
+                    log.Error($"No record found with id {user.Id}");
                     return NotFound();
                 }
                 else
@@ -56,6 +64,7 @@ namespace ProfileService.Controllers
 
                     //user = profile.Users.Add(userTobeUpdated);
                     profile.SaveChanges();
+                    log.Debug($"Record updated successfuly with Id : {user.Id}");
                     return Ok(user);
                 }
 
@@ -68,12 +77,14 @@ namespace ProfileService.Controllers
                 var user = profile.Users.Find(id);
                 if (user == null)
                 {
+                    log.Error($"No record found with id {user.Id}");
                     return NotFound();
                 }
                 else
                 {
                     user = profile.Users.Remove(user);
                     profile.SaveChanges();
+                    log.Debug($"Record deleted successfuly with Id : {user.Id}");
                     return Ok(user);
                 }
 
