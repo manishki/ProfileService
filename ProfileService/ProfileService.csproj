@@ -103,6 +103,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DataBase\ProfileContext.cs" />
+    <Compile Include="DataBase\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
