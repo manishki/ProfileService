@@ -2,7 +2,7 @@
 
 namespace ProfileService.DataBase
 {
-    public class ProfileContext : System.Data.Entity.DbContext
+    public class ProfileContext : DbContext, IProfileContext
     {
         public ProfileContext() : base(nameOrConnectionString: "Default") { }
         public DbSet<User> Users { get; set; }
