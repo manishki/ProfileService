@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProfileService.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -13,6 +14,7 @@ namespace ProfileService
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            StructuremapWebApi.Start();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
