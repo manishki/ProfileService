@@ -7,7 +7,7 @@ namespace ProfileService.DataBase
         public ProfileContext() : base(nameOrConnectionString: "Default") { }
         public DbSet<User> Users { get; set; }
 
-        protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("public");
             base.OnModelCreating(modelBuilder);
